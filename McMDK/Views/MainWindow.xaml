@@ -1,0 +1,116 @@
+﻿<Window x:Class="McMDK.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+        xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
+        xmlns:v="clr-namespace:McMDK.Views"
+        xmlns:vm="clr-namespace:McMDK.ViewModels"
+        xmlns:data="clr-namespace:McMDK.Data;assembly=McMDK.Data"
+        Title="{Binding Title}"
+        MinHeight="500" MinWidth="755"
+        Height="500" Width="755">
+    <Window.Resources>
+        <DataTemplate x:Key="Item" DataType="{x:Type data:Mod}">
+            <TextBlock Text="{Binding UniqueId}"/>
+        </DataTemplate>
+    </Window.Resources>
+    
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
+    
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="ContentRendered">
+            <l:LivetCallMethodAction MethodTarget="{Binding}" MethodName="Initialize"/>
+        </i:EventTrigger>
+        <i:EventTrigger EventName="Closed">
+            <l:DataContextDisposeAction/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    
+    <Grid>
+        <Ribbon VerticalAlignment="Top" Margin="0,-22"
+                Height="150"
+                Background="White">
+            <Ribbon.ApplicationMenu>
+                <RibbonApplicationMenu>
+                    <RibbonApplicationMenuItem Header="開く"
+                                               ImageSource="../Resources/folder_Open_32xLG.png"/>
+                    <RibbonSeparator />
+                    <RibbonApplicationMenuItem Header="保存"
+                                               ImageSource="../Resources/save_32xLG.png"/>
+                    <RibbonApplicationMenuItem Header="名前をつけて保存"/>
+                    <RibbonSeparator />
+                    <RibbonApplicationMenuItem Header="設定"
+                                               ImageSource="../Resources/gear_32xLG.png"/>
+                    <RibbonApplicationMenuItem Header="情報"
+                                               ImageSource="../Resources/StatusAnnotations_Information_32xLG_color.png"/>
+                    <RibbonApplicationMenuItem Header="終了"
+                                               ImageSource="../Resources/StatusAnnotations_Critical_32xLG_color.png"/>
+                </RibbonApplicationMenu>
+            </Ribbon.ApplicationMenu>
+            <RibbonTab Header="ホーム">
+                <RibbonGroup Header="プロジェクト">
+                    <RibbonButton Label="新規"
+                                  LargeImageSource="../Resources/document_32xLG.png"
+                                  Command="{Binding NewProjectCommand}"/>
+                    <RibbonButton Label="開く"
+                                  LargeImageSource="../Resources/folder_Open_32xLG.png"/>
+                    <RibbonButton Label="保存"
+                                  LargeImageSource="../Resources/save_32xLG.png"/>
+                    <RibbonButton Label="情報"
+                                  LargeImageSource="../Resources/gear_32xLG.png"/>
+                </RibbonGroup>
+                <RibbonGroup Header="アイテム">
+                    <RibbonButton Label="追加"
+                                  LargeImageSource="../Resources/AddNewItem_6273.png"/>
+                    <RibbonButton Label="編集"
+                                  LargeImageSource="../Resources/pencil_005_32xLG.png"/>
+                    <RibbonButton Label="コピー"
+                                  LargeImageSource="../Resources/copy_32xLG.png"/>
+                    <RibbonButton Label="削除"
+                                  LargeImageSource="../Resources/StatusAnnotations_Critical_32xLG_color.png"/>
+                </RibbonGroup>
+                <RibbonGroup Header="出力">
+                    <RibbonButton Label="デバッグ"
+                                  LargeImageSource="../Resources/StatusAnnotations_Play_32xLG_color.png"/>
+                    <RibbonButton Label="実行"
+                                  LargeImageSource="../Resources/StatusAnnotations_Play_32xLG_color.png"/>
+                    <RibbonButton Label="リコンパイル"
+                                  LargeImageSource="../Resources/build_Selection_32xLG.png"
+                                  Width="44"/>
+                    <RibbonButton Label="出力"
+                                  LargeImageSource="../Resources/package_32xLG.png"/>
+                    <RibbonButton Label="Java 出力"
+                                  LargeImageSource="../Resources/java_32xLG.png"
+                                  Width="44"/>
+                </RibbonGroup>
+                <RibbonGroup Header="拡張">
+                    <RibbonButton Label=" プラグ イン"
+                                  LargeImageSource="../Resources/ExtensionManager_vsix_OSReg_32x.png"
+                                  Width="44"/>
+                </RibbonGroup>
+            </RibbonTab>
+            <RibbonTab Header="Java">
+                
+            </RibbonTab>
+        </Ribbon>
+        <ListBox Margin="0,115,0,0" Width="200" HorizontalAlignment="Left" ItemTemplate="{StaticResource Item}">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="Background" Value="White"/>
+                        </Trigger>
+                    </Style.Triggers>
+                    <Setter Property="FontSize" Value="14"/>
+                    <Setter Property="Cursor" Value="Hand"/>
+                    <Setter Property="Height" Value="35"/>
+                </Style>
+            </ListBox.ItemContainerStyle>
+        </ListBox>
+        <v:NewProjectWindow DataContext="{Binding NewProjectWindowViewModel}"/>
+    </Grid>
+</Window>
