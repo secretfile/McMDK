@@ -28,7 +28,7 @@ namespace McMDK.Data
 
         public override string ToString()
         {
-            return this.Name + "(MC" + this.McVersion + ", FORGE" + this.ForgeVersion + ", MCP" + this.McpVersion + ")";
+            return this.Name + "(MC " + this.McVersion + ", FORGE " + this.ForgeVersion + ", MCP " + this.McpVersion + ")";
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Windows;
 using Livet;
 using McMDK.Data;
+using McMDK.Utils;
 using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack.Dialogs;
 
@@ -84,6 +85,11 @@ namespace McMDK
             //読み込み
             Minecraft.Load();
 
+
+            //フォルダ作成
+            FileController.CreateDirectory(Define.ProjectDirectory);
+            FileController.CreateDirectory(Define.TempDirectory);
+            FileController.CreateDirectory(Define.PluginDirectory);
         }
 
         //集約エラーハンドラ

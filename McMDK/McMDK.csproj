@@ -80,8 +80,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ViewModels\NewProjectWindowViewModel.cs" />
+    <Compile Include="ViewModels\ProgressWindowViewModel.cs" />
     <Compile Include="Views\NewProjectWindow.xaml.cs">
       <DependentUpon>NewProjectWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProgressWindow.xaml.cs">
+      <DependentUpon>ProgressWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Work\Setup.cs" />
     <Page Include="Views\MainWindow.xaml">
@@ -99,6 +103,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\NewProjectWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ProgressWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

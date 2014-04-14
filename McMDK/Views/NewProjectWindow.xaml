@@ -6,10 +6,6 @@
         xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
         xmlns:v="clr-namespace:McMDK.Views"
         xmlns:vm="clr-namespace:McMDK.ViewModels">
-    
-    <UserControl.DataContext>
-        <vm:NewProjectWindowViewModel/>
-    </UserControl.DataContext>
 
     <UserControl.Resources>
         <!-- エラーの時に出るあの枠を消すだけ -->

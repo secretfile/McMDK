@@ -23,7 +23,8 @@ namespace McMDK.ViewModels
         {
             this.Title = "Minecraft Mod Development Kit v" + Define.GetVersion();
 
-            this.NewProjectWindowViewModel = new NewProjectWindowViewModel();
+            this.ProgressWindowViewModel = new ProgressWindowViewModel();
+            this.NewProjectWindowViewModel = new NewProjectWindowViewModel(this.ProgressWindowViewModel);
         }
 
         public void Initialize()
@@ -88,6 +89,25 @@ namespace McMDK.ViewModels
             }
         }
         #endregion
+
+
+        #region ProgressWindowViewModel変更通知プロパティ
+        private ProgressWindowViewModel _ProgressWindowViewModel;
+
+        public ProgressWindowViewModel ProgressWindowViewModel
+        {
+            get
+            { return _ProgressWindowViewModel; }
+            set
+            { 
+                if (_ProgressWindowViewModel == value)
+                    return;
+                _ProgressWindowViewModel = value;
+                RaisePropertyChanged();
+            }
+        }
+        #endregion
+
 
     }
 }

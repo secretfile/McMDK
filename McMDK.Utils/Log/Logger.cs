@@ -111,7 +111,7 @@ namespace McMDK.Utils.Log
             try
             {
                 StreamWriter sw;
-                if (this.logger == null)
+                if (this.logger != null)
                 {
 // ReSharper disable once PossibleNullReferenceException
                     sw = new StreamWriter(Define.LogDirectory + "\\" + this.logger.GetLoggerFile() + ".log", true);

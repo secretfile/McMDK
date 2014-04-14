@@ -5,6 +5,8 @@ using System.IO.Compression;
 using System.Net;
 using McMDK.Data;
 using McMDK.Utils;
+using McMDK.Utils.Log;
+using McMDK.ViewModels;
 
 namespace McMDK.Work
 {
@@ -17,6 +19,7 @@ namespace McMDK.Work
         private List<string> downloads;
         private List<string> files;
         private string workingDirectory;
+        public ProgressWindowViewModel ProgressWindowViewModel;
 
         public Setup(Project project)
         {
@@ -30,11 +33,11 @@ namespace McMDK.Work
 
         public void Work()
         {
-            Define.GetLogger().Info("");
-            Define.GetLogger().Info("Setup Modding Environment");
-            Define.GetLogger().Info(this.Project.ToString());
+            this.Logging("");
+            this.Logging("Setup Modding Environment");
+            this.Logging(this.Project.ToString());
 
-            if (this.Project.McpVersion.Equals("Gradle"))
+            if (this.Project.McpVersion.Equals("gradle"))
             {
                 this.downloads = new List<string>
                 {
@@ -84,7 +87,10 @@ namespace McMDK.Work
                 }
             }
 
-            Define.GetLogger().Fine(this.downloads.Count + " files download.");
+            //Create Project Dir
+            FileController.CreateDirectory(Define.ProjectDirectory + "\\" + this.Project.Name);
+
+            this.Logging(this.downloads.Count + " files download.");
             this.Download();
         }
 
@@ -94,6 +100,7 @@ namespace McMDK.Work
             client.DownloadProgressChanged += DownloadProgressChanged;
             for (int i = 0; i < this.downloads.Count; i++)
             {
+                this.Logging("Downloading - " + this.downloads[i]);
                 await client.DownloadFileTaskAsync(this.downloads[i], this.files[i]);
             }
             this.Extract();
@@ -116,7 +123,7 @@ namespace McMDK.Work
                     }
                     catch (Exception e)
                     {
-                        Define.GetLogger().Error("Error occurred in Extracting Zip.", e);
+                        this.Logging("Error occurred in Extracting Zip.", LogLevel.ERROR, e);
                         return;
                     }
                 }
@@ -126,11 +133,15 @@ namespace McMDK.Work
 
         private void SetupDevEnv()
         {
+            if (this.ProgressWindowViewModel != null)
+            {
+                this.ProgressWindowViewModel.IsImmediate = true;
+            }
             Patcher.ApplyPatch(workingDirectory + "\\patches_before", workingDirectory);
 
             var process = new Process();
 
-            if (this.Project.McpVersion.Equals("Gradle"))
+            if (this.Project.McpVersion.Equals("gradle"))
             {
                 process.StartInfo.FileName = workingDirectory + "\\gradlew.bat";
                 process.StartInfo.Arguments = "setupDevWorkspace";
@@ -157,14 +168,26 @@ namespace McMDK.Work
 
         private void DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
-            
+            if(this.ProgressWindowViewModel != null)
+            {
+                this.ProgressWindowViewModel.ProgressValue = e.ProgressPercentage;
+            }
         }
 
         private void DataReceived(object sender, DataReceivedEventArgs e)
         {
-            if (String.IsNullOrEmpty(e.Data))
+            if (!String.IsNullOrEmpty(e.Data))
             {
-                
+                this.Logging(e.Data);
+            }
+        }
+
+        private void Logging(string text, LogLevel level = LogLevel.INFO, Exception e = null)
+        {
+            Define.GetLogger().Write(level, text, e);
+            if(this.ProgressWindowViewModel != null)
+            {
+                this.ProgressWindowViewModel.ProgressText = text;
             }
         }
     }

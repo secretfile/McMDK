@@ -112,5 +112,7 @@
             </ListBox.ItemContainerStyle>
         </ListBox>
         <v:NewProjectWindow DataContext="{Binding NewProjectWindowViewModel}"/>
+        
+        <v:ProgressWindow DataContext="{Binding ProgressWindowViewModel}"/>
     </Grid>
 </Window>

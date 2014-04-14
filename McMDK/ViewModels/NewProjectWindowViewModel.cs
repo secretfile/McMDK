@@ -14,11 +14,13 @@ namespace McMDK.ViewModels
 {
     public class NewProjectWindowViewModel : ViewModel, IDataErrorInfo
     {
+        private ProgressWindowViewModel ProgressWindowViewModel;
 
-        public NewProjectWindowViewModel()
+        public NewProjectWindowViewModel(ProgressWindowViewModel progressWindowViewModel)
         {
             this.IsShow = false;
             this.MinecraftVersionList = Minecraft.MinecraftVersions;
+            this.ProgressWindowViewModel = progressWindowViewModel;
         }
 
         public void Initialize()
@@ -62,6 +64,8 @@ namespace McMDK.ViewModels
 
         public void Make()
         {
+            this.ProgressWindowViewModel.IsShow = true;
+
             var project = new Project();
             project.McVersion = this.MinecraftVersion;
             project.McpVersion = Minecraft.MCPVersions[this.MinecraftVersion];
@@ -71,6 +75,7 @@ namespace McMDK.ViewModels
             project.Path = Define.ProjectDirectory + "\\" + this.ProjectName;
 
             var setup = new Setup(project);
+            setup.ProgressWindowViewModel = this.ProgressWindowViewModel;
             setup.OnFinished += SetupOnOnFinished;
             setup.Work();
         }
@@ -101,12 +106,14 @@ namespace McMDK.ViewModels
                     writer.WriteValue(project.McpVersion);
                     writer.WriteEndObject();
                 }
+                FileController.CreateDirectory(Define.ProjectDirectory + "\\" + project.Name + "\\project");
                 var s = new StreamWriter(Define.ProjectDirectory + "\\" + project.Name + "\\project\\settings.json");
                 s.Write(sb.ToString());
                 s.Close();
                 s.Dispose();
             }
             this.IsShow = false;
+            this.ProgressWindowViewModel.IsShow = false;
         }
 
         #endregion

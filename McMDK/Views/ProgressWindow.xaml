@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="McMDK.Views.ProgressWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+        xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
+        xmlns:v="clr-namespace:McMDK.Views"
+        xmlns:vm="clr-namespace:McMDK.ViewModels">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </UserControl.Resources>
+    <Grid Visibility="{Binding IsShow, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <Rectangle Fill="Black" Opacity="0.5" />
+        <Border Height="120" Width="400" Background="White" BorderBrush="LightGray" BorderThickness="1" Padding="10">
+            <Grid>
+                <TextBlock Text="{Binding ProgressText}" FontSize="14" TextWrapping="WrapWithOverflow"
+                       Margin="10,10,0,0" Height="40" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <ProgressBar IsEnabled="True" Value="{Binding ProgressValue}" IsIndeterminate="{Binding IsImmediate}"
+                             Margin="10,55,10,0" VerticalAlignment="Top" Height="20" />
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>
