@@ -81,6 +81,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Data\ProjectLoader.cs" />
     <Compile Include="ViewModels\NewProjectWindowViewModel.cs" />
     <Compile Include="ViewModels\OpenProjectWindowViewModel.cs" />
     <Compile Include="ViewModels\ProgressWindowViewModel.cs" />

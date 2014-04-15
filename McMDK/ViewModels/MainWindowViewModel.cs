@@ -11,6 +11,7 @@ using Livet.Messaging.IO;
 using Livet.EventListeners;
 using Livet.Messaging.Windows;
 
+using McMDK.Plugin;
 using McMDK.Models;
 using McMDK.Utils;
 using McMDK.Data;
@@ -30,11 +31,19 @@ namespace McMDK.ViewModels
 
             this.ProgressWindowViewModel = new ProgressWindowViewModel();
             this.NewProjectWindowViewModel = new NewProjectWindowViewModel(this, this.ProgressWindowViewModel);
+            this.OpenProjectWindowViewModel = new OpenProjectWindowViewModel(this);
         }
 
         public void Initialize()
         {
-
+            this.ProgressWindowViewModel.IsShow = true;
+            this.ProgressWindowViewModel.IsImmediate = true;
+            this.ProgressWindowViewModel.ProgressText = "プラグインの更新を確認しています...";
+            foreach(IPlugin p in PluginLoader.GetPlugins())
+            {
+                p.Update();
+            }
+            this.ProgressWindowViewModel.IsShow = false;
         }
 
 
@@ -105,7 +114,7 @@ namespace McMDK.ViewModels
         {
             if(this.CurrentProject == null)
             {
-
+                this.OpenProjectWindowViewModel.IsShow = true;
             }
             else
             {
@@ -127,6 +136,7 @@ namespace McMDK.ViewModels
                 {
                     return;
                 }
+                this.OpenProjectWindowViewModel.IsShow = true;
             }
         }
         #endregion
@@ -186,6 +196,23 @@ namespace McMDK.ViewModels
         }
         #endregion
 
+
+        #region OpenProjectWindowViewModel変更通知プロパティ
+        private OpenProjectWindowViewModel _OpenProjectWindowViewModel;
+
+        public OpenProjectWindowViewModel OpenProjectWindowViewModel
+        {
+            get
+            { return _OpenProjectWindowViewModel; }
+            set
+            { 
+                if (_OpenProjectWindowViewModel == value)
+                    return;
+                _OpenProjectWindowViewModel = value;
+                RaisePropertyChanged();
+            }
+        }
+        #endregion
 
     }
 }

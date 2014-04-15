@@ -25,5 +25,10 @@ namespace McMDK.Plugin
         {
             
         }
+
+        public void Update()
+        {
+
+        }
     }
 }

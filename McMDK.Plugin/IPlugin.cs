@@ -21,5 +21,7 @@ namespace McMDK.Plugin
         List<UIControl> Controls { get; } 
 
         void Loaded();
+
+        void Update();
     }
 }

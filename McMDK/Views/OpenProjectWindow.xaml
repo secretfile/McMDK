@@ -5,30 +5,74 @@
         xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
         xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
         xmlns:v="clr-namespace:McMDK.Views"
-        xmlns:vm="clr-namespace:McMDK.ViewModels"
-        Height="350" Width="525">
-    
-     <i:Interaction.Triggers>
-     
-     	<!--Viewに特別な要件が存在しない限りは、トリガーやアクションの自作にこだわらず積極的にコードビハインドを使いましょう -->
-    	<!--Viewのコードビハインドは、基本的にView内で完結するロジックとViewModelからのイベントの受信(専用リスナを使用する)に限るとトラブルが少なくなります -->
-    	<!--Livet1.1からはコードビハインドでViewModelのイベントを受信するためのWeakEventLisnterサポートが追加されています --> 
-        
-        <!--WindowのContentRenderedイベントのタイミングでViewModelのInitializeメソッドが呼ばれます-->
-        <i:EventTrigger EventName="ContentRendered">
-            <l:LivetCallMethodAction MethodTarget="{Binding}" MethodName="Initialize"/>
-        </i:EventTrigger>
+        xmlns:vm="clr-namespace:McMDK.ViewModels">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </UserControl.Resources>
+    <Grid Visibility="{Binding IsShow, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <Rectangle Fill="Black" Opacity="0.5"/>
+        <Border Height="400" Width="560" Background="White" BorderBrush="LightGray" BorderThickness="1" Padding="10">
+            <Grid>
+                <TextBlock Text="プロジェクトを開く" FontSize="20" Margin="5,5,0,0" />
+                <TextBlock Text="既存のプロジェクトを開きます。" FontSize="15" Margin="15,35,0,0" />
+                <Line X1="10" X2="530" Y1="80" Y2="80" Stroke="Black" StrokeThickness="0.10"/>
+                <ListBox Margin="20,100,0,50" Width="130" HorizontalAlignment="Left"
+                         ItemsSource="{Binding Projects}"
+                         SelectedItem="{Binding SelectedItem}">
+                    <ListBox.Resources>
+                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="White"/>
+                        <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="White"/>
+                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black"/>
+                    </ListBox.Resources>
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Style.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="FontWeight" Value="Bold"/>
+                                </Trigger>
+                            </Style.Triggers>
+                            <Setter Property="FontSize" Value="15"/>
+                            <Setter Property="Cursor" Value="Hand"/>
+                            <Setter Property="Height" Value="35"  />
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                </ListBox>
+                <TextBlock Text="Project Name" FontSize="14" Margin="160,110,0,0"/>
+                <TextBox Text="{Binding ProjectName}" FontSize="14" Height="22" Width="230" 
+                         Margin="300,110,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                         BorderThickness="0" IsReadOnly="True"/>
+                <TextBlock Text="Project Path" FontSize="14" Margin="160,140,0,0"/>
+                <TextBox Text="{Binding ProjectPath}" FontSize="14" Height="22" Width="230"
+                         Margin="300,140,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                         BorderThickness="0" IsReadOnly="True"/>
+                <TextBlock Text="Minecraft Ver" FontSize="14" Margin="160,170,0,0" />
+                <TextBox Text="{Binding MinecraftVer}" FontSize="14" Height="22" Width="230"
+                         Margin="300,170,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                         BorderThickness="0" IsReadOnly="True"/>
+                <TextBlock Text="MCForge Ver" FontSize="14" Margin="160,200,0,0"/>
+                <TextBox Text="{Binding MCForgeVer}" FontSize="14" Height="22" Width="230"
+                         Margin="300,200,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                         BorderThickness="0" IsReadOnly="True"/>
+                <TextBlock Text="MCP Ver" FontSize="14" Margin="160,230,0,0"/>
+                <TextBox Text="{Binding MCPVer}" FontSize="14" Height="22" Width="230"
+                         Margin="300,230,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                         BorderThickness="0" IsReadOnly="True"/>
+                <TextBlock Text="Mod(s)" FontSize="14" Margin="160,260,0,0"/>
+                <TextBox Text="{Binding Mods}" FontSize="14" Height="22" Width="230"
+                         Margin="300,260,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                         BorderThickness="0" IsReadOnly="True"/>
+                <TextBlock Text="mcmod.info" FontSize="14" Margin="160,290,0,0"/>
+                <TextBox Text="{Binding ModInfo}" FontSize="14" Height="22" Width="230"
+                         Margin="300,290,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                         BorderThickness="0" IsReadOnly="True"/>
+                <Button Content="開く" Command="{Binding OpenButtonCommand}"
+                        Height="25" Width="80" FontSize="13"
+                        Margin="0,0,10,10" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
 
-        <!--Windowが閉じたタイミングでViewModelのDisposeメソッドが呼ばれます-->
-        <i:EventTrigger EventName="Closed">
-            <l:DataContextDisposeAction/>
-        </i:EventTrigger>
-
-        <!--WindowのCloseキャンセル処理に対応する場合は、WindowCloseCancelBehaviorの使用を検討してください-->
-
-    </i:Interaction.Triggers>
-    
-    <Grid>
-        
+                <Button Content="キャンセル" Command="{Binding CancelButtonCommand}"
+                        Height="25" Width="80" FontSize="13"
+                        Margin="0,0,100,10" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+            </Grid>
+        </Border>
     </Grid>
 </UserControl>
