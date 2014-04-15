@@ -32,6 +32,7 @@ namespace McMDK.ViewModels
             this.ProgressWindowViewModel = new ProgressWindowViewModel();
             this.NewProjectWindowViewModel = new NewProjectWindowViewModel(this, this.ProgressWindowViewModel);
             this.OpenProjectWindowViewModel = new OpenProjectWindowViewModel(this);
+            this.InformationWindowViewModel = new InformationWindowViewModel(this, this.ProgressWindowViewModel);
         }
 
         public void Initialize()
@@ -94,7 +95,6 @@ namespace McMDK.ViewModels
         #endregion
 
 
-
         #region OpenProjectCommand
         private ViewModelCommand _OpenProjectCommand;
 
@@ -141,6 +141,27 @@ namespace McMDK.ViewModels
         }
         #endregion
 
+
+        #region OpenInformationCommand
+        private ViewModelCommand _OpenInformationCommand;
+
+        public ViewModelCommand OpenInformationCommand
+        {
+            get
+            {
+                if (_OpenInformationCommand == null)
+                {
+                    _OpenInformationCommand = new ViewModelCommand(OpenInformation);
+                }
+                return _OpenInformationCommand;
+            }
+        }
+
+        public void OpenInformation()
+        {
+            this.InformationWindowViewModel.Show();
+        }
+        #endregion
 
 
         #region Title変更通知プロパティ
@@ -209,6 +230,24 @@ namespace McMDK.ViewModels
                 if (_OpenProjectWindowViewModel == value)
                     return;
                 _OpenProjectWindowViewModel = value;
+                RaisePropertyChanged();
+            }
+        }
+        #endregion
+
+
+        #region InformationWindowViewModel変更通知プロパティ
+        private InformationWindowViewModel _InformationWindowViewModel;
+
+        public InformationWindowViewModel InformationWindowViewModel
+        {
+            get
+            { return _InformationWindowViewModel; }
+            set
+            { 
+                if (_InformationWindowViewModel == value)
+                    return;
+                _InformationWindowViewModel = value;
                 RaisePropertyChanged();
             }
         }

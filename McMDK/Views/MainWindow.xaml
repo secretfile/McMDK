@@ -63,9 +63,11 @@
                                   LargeImageSource="../Resources/folder_Open_32xLG.png"
                                   Command="{Binding OpenProjectCommand}"/>
                     <RibbonButton Label="保存"
-                                  LargeImageSource="../Resources/save_32xLG.png"/>
+                                  LargeImageSource="../Resources/save_32xLG.png"
+                                  />
                     <RibbonButton Label="情報"
-                                  LargeImageSource="../Resources/gear_32xLG.png"/>
+                                  LargeImageSource="../Resources/gear_32xLG.png"
+                                  Command="{Binding OpenInformationCommand}"/>
                 </RibbonGroup>
                 <RibbonGroup Header="アイテム">
                     <RibbonButton Label="追加"
@@ -118,6 +120,7 @@
         </ListBox>
         <v:NewProjectWindow DataContext="{Binding NewProjectWindowViewModel}"/>
         <v:OpenProjectWindow DataContext="{Binding OpenProjectWindowViewModel}"/>
+        <v:InformationWindow DataContext="{Binding InformationWindowViewModel}"/>
         <v:ProgressWindow DataContext="{Binding ProgressWindowViewModel}"/>
     </Grid>
 </Window>

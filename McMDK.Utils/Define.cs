@@ -32,12 +32,24 @@ namespace McMDK.Utils
 
         public static readonly string CurrentDirectory = Directory.GetCurrentDirectory();
 
+        /// <summary>
+        /// CurrentDirectory//plugins
+        /// </summary>
         public static readonly string PluginDirectory = CurrentDirectory + "\\plugins";
 
+        /// <summary>
+        /// CurrentDirectory//projects
+        /// </summary>
         public static readonly string ProjectDirectory = CurrentDirectory + "\\projects";
 
+        /// <summary>
+        /// CurrentDirectory//logs
+        /// </summary>
         public static readonly string LogDirectory = CurrentDirectory + "\\logs";
 
+        /// <summary>
+        /// CurrentDirectory//temp
+        /// </summary>
         public static readonly string TempDirectory = CurrentDirectory + "\\temp";
 
         public static readonly string SettingPath = CurrentDirectory + "\\settings.xml";
