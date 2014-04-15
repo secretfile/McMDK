@@ -13,18 +13,23 @@ using Livet.Messaging.Windows;
 
 using McMDK.Models;
 using McMDK.Utils;
+using McMDK.Data;
+
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace McMDK.ViewModels
 {
     public class MainWindowViewModel : ViewModel
     {
+        public Project CurrentProject { set; get; }
+        public IntPtr WindowHandle;
 
         public MainWindowViewModel()
         {
             this.Title = "Minecraft Mod Development Kit v" + Define.GetVersion();
 
             this.ProgressWindowViewModel = new ProgressWindowViewModel();
-            this.NewProjectWindowViewModel = new NewProjectWindowViewModel(this.ProgressWindowViewModel);
+            this.NewProjectWindowViewModel = new NewProjectWindowViewModel(this, this.ProgressWindowViewModel);
         }
 
         public void Initialize()
@@ -50,9 +55,82 @@ namespace McMDK.ViewModels
 
         public void NewProject()
         {
-            this.NewProjectWindowViewModel.Show();
+            if (this.CurrentProject == null)
+            {
+                this.NewProjectWindowViewModel.Show();
+            }
+            else
+            {
+                var taskDialog = new TaskDialog();
+                taskDialog.Caption = "警告";
+                taskDialog.InstructionText = "プロジェクトが既に開かれています。";
+                taskDialog.Text = "プロジェクトが既に開かれています。新規にプロジェクトを開くと、現在のプロジェクトはアンロードされますがよろしいですか？\n※保存していない場合はこれまでの作業が破棄されます。";
+                taskDialog.Icon = TaskDialogStandardIcon.Warning;
+                taskDialog.StandardButtons = TaskDialogStandardButtons.Yes | TaskDialogStandardButtons.No;
+                taskDialog.Opened += (_, __) =>
+                {
+                    var sender = (TaskDialog)_;
+                    sender.Icon = sender.Icon;
+                };
+                taskDialog.StartupLocation = TaskDialogStartupLocation.CenterOwner;
+                taskDialog.OwnerWindowHandle = this.WindowHandle;
+                taskDialog.Cancelable = false;
+                if(taskDialog.Show() == TaskDialogResult.No)
+                {
+                    return;
+                }
+                this.NewProjectWindowViewModel.Show();
+            }
         }
         #endregion
+
+
+
+        #region OpenProjectCommand
+        private ViewModelCommand _OpenProjectCommand;
+
+        public ViewModelCommand OpenProjectCommand
+        {
+            get
+            {
+                if (_OpenProjectCommand == null)
+                {
+                    _OpenProjectCommand = new ViewModelCommand(OpenProject);
+                }
+                return _OpenProjectCommand;
+            }
+        }
+
+        public void OpenProject()
+        {
+            if(this.CurrentProject == null)
+            {
+
+            }
+            else
+            {
+                var taskDialog = new TaskDialog();
+                taskDialog.Caption = "警告";
+                taskDialog.InstructionText = "プロジェクトが既に開かれています。";
+                taskDialog.Text = "プロジェクトが既に開かれています。新規にプロジェクトを開くと、現在のプロジェクトはアンロードされますがよろしいですか？\n※保存していない場合はこれまでの作業が破棄されます。";
+                taskDialog.Icon = TaskDialogStandardIcon.Warning;
+                taskDialog.StandardButtons = TaskDialogStandardButtons.Yes | TaskDialogStandardButtons.No;
+                taskDialog.StartupLocation = TaskDialogStartupLocation.CenterOwner;
+                taskDialog.OwnerWindowHandle = this.WindowHandle;
+                taskDialog.Cancelable = false;
+                taskDialog.Opened += (_, __) =>
+                {
+                    var sender = (TaskDialog)_;
+                    sender.Icon = sender.Icon;
+                };
+                if(taskDialog.Show() == TaskDialogResult.No)
+                {
+                    return;
+                }
+            }
+        }
+        #endregion
+
 
 
         #region Title変更通知プロパティ

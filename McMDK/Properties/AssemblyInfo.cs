@@ -12,7 +12,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("McMDK")]
-[assembly: AssemblyCopyright("Copyright c  2011")]
+[assembly: AssemblyCopyright("Copyright c  2012 - 2014 tuyapin")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

@@ -14,12 +14,14 @@ namespace McMDK.ViewModels
 {
     public class NewProjectWindowViewModel : ViewModel, IDataErrorInfo
     {
+        private MainWindowViewModel MainWindowViewModel;
         private ProgressWindowViewModel ProgressWindowViewModel;
 
-        public NewProjectWindowViewModel(ProgressWindowViewModel progressWindowViewModel)
+        public NewProjectWindowViewModel(MainWindowViewModel main, ProgressWindowViewModel progressWindowViewModel)
         {
             this.IsShow = false;
             this.MinecraftVersionList = Minecraft.MinecraftVersions;
+            this.MainWindowViewModel = main;
             this.ProgressWindowViewModel = progressWindowViewModel;
         }
 
@@ -111,6 +113,8 @@ namespace McMDK.ViewModels
                 s.Write(sb.ToString());
                 s.Close();
                 s.Dispose();
+
+                this.MainWindowViewModel.CurrentProject = project;
             }
             this.IsShow = false;
             this.ProgressWindowViewModel.IsShow = false;

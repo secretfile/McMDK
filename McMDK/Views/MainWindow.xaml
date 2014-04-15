@@ -9,7 +9,8 @@
         xmlns:data="clr-namespace:McMDK.Data;assembly=McMDK.Data"
         Title="{Binding Title}"
         MinHeight="500" MinWidth="755"
-        Height="500" Width="755">
+        Height="500" Width="755"
+        >
     <Window.Resources>
         <DataTemplate x:Key="Item" DataType="{x:Type data:Mod}">
             <TextBlock Text="{Binding UniqueId}"/>
@@ -50,6 +51,9 @@
                                                ImageSource="../Resources/StatusAnnotations_Critical_32xLG_color.png"/>
                 </RibbonApplicationMenu>
             </Ribbon.ApplicationMenu>
+            <Ribbon.QuickAccessToolBar>
+                <RibbonQuickAccessToolBar/>
+            </Ribbon.QuickAccessToolBar>
             <RibbonTab Header="ホーム">
                 <RibbonGroup Header="プロジェクト">
                     <RibbonButton Label="新規"

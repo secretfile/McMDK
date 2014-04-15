@@ -4,6 +4,7 @@ using System.Windows;
 using Livet;
 using McMDK.Data;
 using McMDK.Utils;
+using McMDK.Plugin;
 using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack.Dialogs;
 
@@ -84,7 +85,7 @@ namespace McMDK
 
             //読み込み
             Minecraft.Load();
-
+            PluginLoader.Load();
 
             //フォルダ作成
             FileController.CreateDirectory(Define.ProjectDirectory);
