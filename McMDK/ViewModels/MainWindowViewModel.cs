@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.ComponentModel;
@@ -17,6 +18,8 @@ using McMDK.Utils;
 using McMDK.Data;
 
 using Microsoft.WindowsAPICodePack.Dialogs;
+
+using Newtonsoft.Json;
 
 namespace McMDK.ViewModels
 {
@@ -142,6 +145,54 @@ namespace McMDK.ViewModels
         #endregion
 
 
+        #region SaveProjectCommand
+        private ViewModelCommand _SaveProjectCommand;
+
+        public ViewModelCommand SaveProjectCommand
+        {
+            get
+            {
+                if (_SaveProjectCommand == null)
+                {
+                    _SaveProjectCommand = new ViewModelCommand(SaveProject);
+                }
+                return _SaveProjectCommand;
+            }
+        }
+
+        public void SaveProject()
+        {
+            var project = this.CurrentProject;
+            FileController.CreateDirectory(project.Path);
+            var sb = new StringBuilder();
+            var sw = new StringWriter(sb);
+            using (JsonWriter writer = new JsonTextWriter(sw))
+            {
+                writer.Formatting = Formatting.Indented;
+                writer.WriteStartObject();
+                writer.WritePropertyName("Project Name");
+                writer.WriteValue(project.Name);
+                writer.WritePropertyName("Project Path");
+                writer.WriteValue(project.Path);
+                writer.WritePropertyName("Minecraft Version");
+                writer.WriteValue(project.McVersion);
+                writer.WritePropertyName("Minecraft Forge Version");
+                writer.WriteValue(project.ForgeVersion);
+                writer.WritePropertyName("MCP Version");
+                writer.WriteValue(project.McpVersion);
+                writer.WriteEndObject();
+            }
+            FileController.CreateDirectory(Define.ProjectDirectory + "\\" + project.Name + "\\project");
+            var s = new StreamWriter(Define.ProjectDirectory + "\\" + project.Name + "\\project\\settings.json", false);
+            s.Write(sb.ToString());
+            s.Close();
+            s.Dispose();
+
+        }
+        #endregion
+
+
+
         #region OpenInformationCommand
         private ViewModelCommand _OpenInformationCommand;
 
@@ -159,7 +210,28 @@ namespace McMDK.ViewModels
 
         public void OpenInformation()
         {
-            this.InformationWindowViewModel.Show();
+            if(this.CurrentProject != null)
+            {
+                this.InformationWindowViewModel.Show();
+            }
+            else
+            {
+                var taskDialog = new TaskDialog();
+                taskDialog.Caption = "エラー";
+                taskDialog.InstructionText = "プロジェクトが開かれていません。";
+                taskDialog.Text = "プロジェクトが開かれていないため、プロジェクト情報を取得することができませんでした。\nプロジェクトを開いてから実行してください。";
+                taskDialog.Icon = TaskDialogStandardIcon.Error;
+                taskDialog.StandardButtons = TaskDialogStandardButtons.Ok;
+                taskDialog.StartupLocation = TaskDialogStartupLocation.CenterOwner;
+                taskDialog.OwnerWindowHandle = this.WindowHandle;
+                taskDialog.Cancelable = false;
+                taskDialog.Opened += (_, __) =>
+                {
+                    var sender = (TaskDialog)_;
+                    sender.Icon = sender.Icon;
+                };
+                taskDialog.Show();
+            }
         }
         #endregion
 

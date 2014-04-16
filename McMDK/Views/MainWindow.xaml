@@ -64,7 +64,7 @@
                                   Command="{Binding OpenProjectCommand}"/>
                     <RibbonButton Label="保存"
                                   LargeImageSource="../Resources/save_32xLG.png"
-                                  />
+                                  Command="{Binding SaveProjectCommand}"/>
                     <RibbonButton Label="情報"
                                   LargeImageSource="../Resources/gear_32xLG.png"
                                   Command="{Binding OpenInformationCommand}"/>
