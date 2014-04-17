@@ -192,7 +192,6 @@ namespace McMDK.ViewModels
         #endregion
 
 
-
         #region OpenInformationCommand
         private ViewModelCommand _OpenInformationCommand;
 

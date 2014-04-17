@@ -37,10 +37,12 @@
             <Ribbon.ApplicationMenu>
                 <RibbonApplicationMenu>
                     <RibbonApplicationMenuItem Header="開く"
-                                               ImageSource="../Resources/folder_Open_32xLG.png"/>
+                                               ImageSource="../Resources/folder_Open_32xLG.png"
+                                               Command="{Binding OpenProjectCommand}"/>
                     <RibbonSeparator />
                     <RibbonApplicationMenuItem Header="保存"
-                                               ImageSource="../Resources/save_32xLG.png"/>
+                                               ImageSource="../Resources/save_32xLG.png"
+                                               Command="{Binding SaveProjectCommand}"/>
                     <RibbonApplicationMenuItem Header="名前をつけて保存"/>
                     <RibbonSeparator />
                     <RibbonApplicationMenuItem Header="設定"

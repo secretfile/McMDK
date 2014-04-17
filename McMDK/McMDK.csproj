@@ -99,6 +99,10 @@
     <Compile Include="Views\ProgressWindow.xaml.cs">
       <DependentUpon>ProgressWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Work\Debug.cs" />
+    <Compile Include="Work\Execute.cs" />
+    <Compile Include="Work\Packaging.cs" />
+    <Compile Include="Work\Recompile.cs" />
     <Compile Include="Work\Setup.cs" />
     <Page Include="Views\InformationWindow.xaml">
       <SubType>Designer</SubType>
