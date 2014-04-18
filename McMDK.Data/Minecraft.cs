@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Xml.Linq;
-using McMDK.Utils;
 
 namespace McMDK.Data
 {
@@ -15,10 +14,16 @@ namespace McMDK.Data
 
         public static Dictionary<string, string> MCPVersions = new Dictionary<string, string>();
 
+        private const string Domain = "http://tuyapin.net/application/mcmdk/";
+        public static readonly string NewVersionUrl = Domain + "version.xml";
+        public static readonly string ForgeVersionUrl = Domain + "forge/{0}.xml";
+        public static readonly string MinecraftVersionUrl = Domain + "minecraft.xml";
+        public static readonly string PatchUrl = Domain + "patch/{0}.zip";
+
         public async static void Load()
         {
             var client = new WebClient();
-            var vs = await client.DownloadStringTaskAsync(Define.MinecraftVersionUrl);
+            var vs = await client.DownloadStringTaskAsync(MinecraftVersionUrl);
 
             var element = XElement.Parse(vs);
 // ReSharper disable once PossibleNullReferenceException
@@ -33,7 +38,7 @@ namespace McMDK.Data
                 MCPVersions.Add(item.Version, item.MCPVersion);
 
                 //
-                vs = await client.DownloadStringTaskAsync(String.Format(Define.ForgeVersionUrl, item.Version).Replace(" ", "_"));
+                vs = await client.DownloadStringTaskAsync(String.Format(ForgeVersionUrl, item.Version).Replace(" ", "_"));
                 var list = new List<string>();
                 XElement element1 = XElement.Parse(vs);
 // ReSharper disable once PossibleNullReferenceException

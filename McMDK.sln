@@ -14,6 +14,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "McMDK.Plugin", "McMDK.Plugin\McMDK.Plugin.csproj", "{A9847F83-5328-4925-8D91-2594795F2772}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "McMDK.Data", "McMDK.Data\McMDK.Data.csproj", "{A1B7D999-63E4-45F5-AFCF-1C0402F1006E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{13AF0F60-CD43-4FB3-8688-E69ABBD07A7E} = {13AF0F60-CD43-4FB3-8688-E69ABBD07A7E}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExperimentFunction", "ExperimentFunction\ExperimentFunction.csproj", "{51D5A076-7B28-41E0-AF17-0AC9E0BF8859}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,6 +70,16 @@ Global
 		{A1B7D999-63E4-45F5-AFCF-1C0402F1006E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{A1B7D999-63E4-45F5-AFCF-1C0402F1006E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{A1B7D999-63E4-45F5-AFCF-1C0402F1006E}.Release|x86.ActiveCfg = Release|Any CPU
+		{51D5A076-7B28-41E0-AF17-0AC9E0BF8859}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51D5A076-7B28-41E0-AF17-0AC9E0BF8859}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51D5A076-7B28-41E0-AF17-0AC9E0BF8859}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{51D5A076-7B28-41E0-AF17-0AC9E0BF8859}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{51D5A076-7B28-41E0-AF17-0AC9E0BF8859}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{51D5A076-7B28-41E0-AF17-0AC9E0BF8859}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51D5A076-7B28-41E0-AF17-0AC9E0BF8859}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51D5A076-7B28-41E0-AF17-0AC9E0BF8859}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{51D5A076-7B28-41E0-AF17-0AC9E0BF8859}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{51D5A076-7B28-41E0-AF17-0AC9E0BF8859}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

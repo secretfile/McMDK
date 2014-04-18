@@ -48,6 +48,11 @@ namespace McMDK.Utils
         public static readonly string LogDirectory = CurrentDirectory + "\\logs";
 
         /// <summary>
+        /// CurrentDirectory//assets
+        /// </summary>
+        public static readonly string AssetsDirectory = CurrentDirectory + "\\assets";
+
+        /// <summary>
         /// CurrentDirectory//temp
         /// </summary>
         public static readonly string TempDirectory = CurrentDirectory + "\\temp";

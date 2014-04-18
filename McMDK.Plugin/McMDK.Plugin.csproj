@@ -62,12 +62,6 @@
     <Compile Include="XmlPluginBase.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\McMDK.Utils\McMDK.Utils.csproj">
-      <Project>{13af0f60-cd43-4fb3-8688-e69abbd07a7e}</Project>
-      <Name>McMDK.Utils</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Page Include="UI\Controls\ModdingControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -75,6 +69,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Build\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\McMDK.Utils\McMDK.Utils.csproj">
+      <Project>{13af0f60-cd43-4fb3-8688-e69abbd07a7e}</Project>
+      <Name>McMDK.Utils</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

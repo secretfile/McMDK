@@ -15,10 +15,9 @@ namespace McMDK.Data.Texture
         /// 0  : Top Texture <para />
         /// 1  : Side(Left) Texture <para />
         /// 2  : Side(Right) Texture <para />
-        /// -1 : Normal Texture <para />
         /// -2 : Item Rendering(TextureType.Block only) 
         /// </summary>
-        public int RenderType;
+        public int RenderingSide;
 
         public RenderingType RenderingType;
     }

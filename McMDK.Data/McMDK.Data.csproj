@@ -55,10 +55,6 @@
       <Project>{a9847f83-5328-4925-8d91-2594795f2772}</Project>
       <Name>McMDK.Plugin</Name>
     </ProjectReference>
-    <ProjectReference Include="..\McMDK.Utils\McMDK.Utils.csproj">
-      <Project>{13af0f60-cd43-4fb3-8688-e69abbd07a7e}</Project>
-      <Name>McMDK.Utils</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
