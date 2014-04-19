@@ -16,16 +16,25 @@ namespace McMDK.Data.Texture
 
         Chest,
 
+        /// <summary>
+        /// Contains "Trapdoor"
+        /// </summary>
+        Plate,
+
+        Button,
+
         Fence,
 
-        Trapdoor,
+        Portal,
 
-        Carpet,
+        Cake,
+
+        DragonEgg,
 
         Wall,
 
         Anvil,
 
-        Button
+        Carpet
     }
 }
