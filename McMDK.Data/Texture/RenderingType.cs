@@ -29,6 +29,8 @@ namespace McMDK.Data.Texture
 
         Cake,
 
+        EnchantmentTable,
+
         DragonEgg,
 
         Wall,

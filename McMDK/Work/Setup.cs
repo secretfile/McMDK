@@ -12,14 +12,12 @@ namespace McMDK.Work
 {
     public delegate void SetupFinishedEventHandler(object sender);
 
-    public class Setup
+    public class Setup : WorkBase
     {
         public readonly Project Project;
-        public event SetupFinishedEventHandler OnFinished;
         private List<string> downloads;
         private List<string> files;
         private string workingDirectory;
-        public ProgressWindowViewModel ProgressWindowViewModel;
 
         public Setup(Project project)
         {
@@ -31,7 +29,7 @@ namespace McMDK.Work
         }
 
 
-        public void Work()
+        public override void Work()
         {
             this.Logging("");
             this.Logging("Setup Modding Environment");
@@ -160,7 +158,7 @@ namespace McMDK.Work
             process.EnableRaisingEvents = true;
             process.OutputDataReceived += DataReceived;
             process.ErrorDataReceived += DataReceived;
-            process.Exited += (sender, args) => this.OnFinished(this);
+            process.Exited += (sender, args) => OnWorkFinished(this, null);
             process.Start();
             process.BeginErrorReadLine();
             process.BeginOutputReadLine();
@@ -182,13 +180,9 @@ namespace McMDK.Work
             }
         }
 
-        private void Logging(string text, LogLevel level = LogLevel.INFO, Exception e = null)
+        protected override void OnWorkFinished(object sender, object args)
         {
-            Define.GetLogger().Write(level, text, e);
-            if(this.ProgressWindowViewModel != null)
-            {
-                this.ProgressWindowViewModel.ProgressText = text;
-            }
+            base.OnWorkFinished(sender, args);
         }
     }
 }

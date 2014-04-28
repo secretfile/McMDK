@@ -82,7 +82,7 @@ namespace McMDK.ViewModels
             setup.Work();
         }
 
-        private void SetupOnOnFinished(object sender)
+        private void SetupOnOnFinished(object sender, object args)
         {
             if (sender is Setup)
             {

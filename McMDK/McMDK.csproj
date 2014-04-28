@@ -83,12 +83,16 @@
     </ApplicationDefinition>
     <Compile Include="Converter\BooleanToReverseBooleanConverter.cs" />
     <Compile Include="Data\ProjectLoader.cs" />
+    <Compile Include="Data\TextureLoader.cs" />
     <Compile Include="ViewModels\InformationWindowViewModel.cs" />
     <Compile Include="ViewModels\NewProjectWindowViewModel.cs" />
     <Compile Include="ViewModels\OpenProjectWindowViewModel.cs" />
     <Compile Include="ViewModels\ProgressWindowViewModel.cs" />
     <Compile Include="Views\InformationWindow.xaml.cs">
       <DependentUpon>InformationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NewModWindow.xaml.cs">
+      <DependentUpon>NewModWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\NewProjectWindow.xaml.cs">
       <DependentUpon>NewProjectWindow.xaml</DependentUpon>
@@ -104,6 +108,7 @@
     <Compile Include="Work\Packaging.cs" />
     <Compile Include="Work\Recompile.cs" />
     <Compile Include="Work\Setup.cs" />
+    <Compile Include="Work\WorkBase.cs" />
     <Page Include="Views\InformationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -122,6 +127,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\NewModWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\NewProjectWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -191,7 +200,9 @@
     <Resource Include="Resources\StatusAnnotations_Play_32xLG_color.png" />
     <Resource Include="Resources\StatusAnnotations_Stop_32xLG_color.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Assets\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\McMDK.Data\McMDK.Data.csproj">
       <Project>{a1b7d999-63e4-45f5-afcf-1c0402f1006e}</Project>

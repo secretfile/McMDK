@@ -30,7 +30,7 @@ namespace McMDK.ViewModels
 
         public MainWindowViewModel()
         {
-            this.Title = "Minecraft Mod Development Kit v" + Define.GetVersion();
+            this.Title = "Minecraft Mod Development Kit " + Define.GetVersion();
 
             this.ProgressWindowViewModel = new ProgressWindowViewModel();
             this.NewProjectWindowViewModel = new NewProjectWindowViewModel(this, this.ProgressWindowViewModel);

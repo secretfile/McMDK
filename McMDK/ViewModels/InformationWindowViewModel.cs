@@ -122,7 +122,7 @@ namespace McMDK.ViewModels
             }
         }
 
-        public void SetupOnFinished(object sender)
+        public void SetupOnFinished(object sender, object args)
         {
             if (sender is Setup)
             {
