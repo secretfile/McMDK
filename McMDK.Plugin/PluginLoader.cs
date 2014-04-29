@@ -27,7 +27,7 @@ namespace McMDK.Plugin
             string[] plugins = FileController.LoadDirectory(Define.PluginDirectory, true);
             foreach (string plugin in plugins)
             {
-                Define.GetLogger().Fine("Loading Plugin from " + plugin);
+                Define.GetLogger().Info("Loading Plugin from " + plugin);
                 if (plugin.EndsWith("template"))
                 {
                     Define.GetLogger().Fine("Skip loading plugin of " + plugin);
@@ -39,6 +39,7 @@ namespace McMDK.Plugin
                     continue;
                 }
                 //Load root
+                Define.GetLogger().Info("Loading plugin settings...");
                 var a = from b in XElement.Load(plugin + "\\plugin.xml").Elements()
                         select new XmlPluginBase
                         {
@@ -54,23 +55,24 @@ namespace McMDK.Plugin
                 {
                     p = item;
                 }
+                Define.GetLogger().Info("Loaded plugin settings.");
 
                 p.Logger = new Logger(p.Name);
                 p.Logger.SetParent(Define.GetLogger());
-                p.Logger.Fine("Initializing...");
+                p.Logger.Info("Initializing...");
                 p.Loaded();
-                p.Logger.Fine("Initialized.");
+                p.Logger.Info("Initialized.");
 
-                p.Logger.Fine("Loading UI Settings...");
+                p.Logger.Info("Loading UI Settings...");
                 SerializeXML(p, plugin);
-                p.Logger.Fine("Loaded UI Settings.");
+                p.Logger.Info("Loaded UI Settings.");
 
                 //Load Builder 
-                p.Logger.Fine("Loading Builder Settings...");
+                p.Logger.Info("Loading Builder Settings...");
                 //
-                p.Logger.Fine("Loaded Builder Settings.");
+                p.Logger.Info("Loaded Builder Settings.");
 
-                Define.GetLogger().Fine(p.Name + " is loaded.");
+                Define.GetLogger().Info(p.Name + " is loaded.");
 
                 Plugins.Add(p);
             }

@@ -7,6 +7,7 @@
         xmlns:v="clr-namespace:McMDK.Views"
         xmlns:vm="clr-namespace:McMDK.ViewModels"
         xmlns:data="clr-namespace:McMDK.Data;assembly=McMDK.Data"
+        xmlns:plugin="clr-namespace:McMDK.Plugin.UI.Controls;assembly=McMDK.Plugin"
         Title="{Binding Title}"
         MinHeight="500" MinWidth="755"
         Height="500" Width="755"
@@ -30,7 +31,7 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
     
-    <Grid>
+    <Grid x:Name="MainGrid">
         <Ribbon VerticalAlignment="Top" Margin="0,-22"
                 Height="150"
                 Background="White">
@@ -43,11 +44,10 @@
                     <RibbonApplicationMenuItem Header="保存"
                                                ImageSource="../Resources/save_32xLG.png"
                                                Command="{Binding SaveProjectCommand}"/>
-                    <RibbonApplicationMenuItem Header="名前をつけて保存"/>
                     <RibbonSeparator />
                     <RibbonApplicationMenuItem Header="設定"
                                                ImageSource="../Resources/gear_32xLG.png"/>
-                    <RibbonApplicationMenuItem Header="情報"
+                    <RibbonApplicationMenuItem Header="McMDKについて"
                                                ImageSource="../Resources/StatusAnnotations_Information_32xLG_color.png"/>
                     <RibbonApplicationMenuItem Header="終了"
                                                ImageSource="../Resources/StatusAnnotations_Critical_32xLG_color.png"/>
@@ -73,7 +73,8 @@
                 </RibbonGroup>
                 <RibbonGroup Header="アイテム">
                     <RibbonButton Label="追加"
-                                  LargeImageSource="../Resources/AddNewItem_6273.png"/>
+                                  LargeImageSource="../Resources/AddNewItem_6273.png"
+                                  Command="{Binding AddItemCommand}"/>
                     <RibbonButton Label="編集"
                                   LargeImageSource="../Resources/pencil_005_32xLG.png"/>
                     <RibbonButton Label="コピー"
@@ -123,6 +124,7 @@
         <v:NewProjectWindow DataContext="{Binding NewProjectWindowViewModel}"/>
         <v:OpenProjectWindow DataContext="{Binding OpenProjectWindowViewModel}"/>
         <v:InformationWindow DataContext="{Binding InformationWindowViewModel}"/>
+        <v:NewModWindow DataContext="{Binding NewModWindowViewModel}" />
         <v:ProgressWindow DataContext="{Binding ProgressWindowViewModel}"/>
     </Grid>
 </Window>

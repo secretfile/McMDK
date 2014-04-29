@@ -23,12 +23,17 @@ namespace McMDK.Plugin
 
         public void Loaded()
         {
-            
+            this.Controls = new List<UIControl>();
         }
 
         public void Update()
         {
 
+        }
+
+        public override string ToString()
+        {
+            return this.Name + " (" + this.Version + ")";
         }
     }
 }

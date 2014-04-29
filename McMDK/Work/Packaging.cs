@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace McMDK.Work
 {
-    class Packaging
+    /// <summary>
+    /// Packaging Mod Classes, Information and Assets for Distribute.
+    /// </summary>
+    public class Packaging
     {
     }
 }

@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace McMDK.Work
 {
-    class Execute
+    /// <summary>
+    /// Install Miecraft Forge and Generated Mod to .minecraft.
+    /// And Launch Minecraft Official Launcher.
+    /// </summary>
+    public class Execute
     {
     }
 }

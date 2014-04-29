@@ -13,10 +13,11 @@ using Livet.EventListeners;
 using Livet.Messaging.Windows;
 
 using McMDK.Plugin;
+using McMDK.Plugin.UI.Controls;
 using McMDK.Models;
 using McMDK.Utils;
 using McMDK.Data;
-
+using McMDK.Views;
 using Microsoft.WindowsAPICodePack.Dialogs;
 
 using Newtonsoft.Json;
@@ -28,6 +29,10 @@ namespace McMDK.ViewModels
         public Project CurrentProject { set; get; }
         public IntPtr WindowHandle;
 
+        //TODO: 分離
+        public MainWindow View { set; get; }
+        private ModdingControl ModinggControl;
+
         public MainWindowViewModel()
         {
             this.Title = "Minecraft Mod Development Kit " + Define.GetVersion();
@@ -36,10 +41,17 @@ namespace McMDK.ViewModels
             this.NewProjectWindowViewModel = new NewProjectWindowViewModel(this, this.ProgressWindowViewModel);
             this.OpenProjectWindowViewModel = new OpenProjectWindowViewModel(this);
             this.InformationWindowViewModel = new InformationWindowViewModel(this, this.ProgressWindowViewModel);
+            this.NewModWindowViewModel = new NewModWindowViewModel(this);
         }
 
         public void Initialize()
         {
+            this.ModinggControl = new ModdingControl();
+            this.ModinggControl.Margin = new System.Windows.Thickness(200, 115, 0, 0);
+            this.View.MainGrid.Children.Add(this.ModinggControl);
+
+            Define.GetLogger().Info("Cheking plugins updates...");
+
             this.ProgressWindowViewModel.IsShow = true;
             this.ProgressWindowViewModel.IsImmediate = true;
             this.ProgressWindowViewModel.ProgressText = "プラグインの更新を確認しています...";
@@ -47,6 +59,7 @@ namespace McMDK.ViewModels
             {
                 p.Update();
             }
+            Define.GetLogger().Info("Check finished.");
             this.ProgressWindowViewModel.IsShow = false;
         }
 
@@ -235,6 +248,49 @@ namespace McMDK.ViewModels
         #endregion
 
 
+        #region AddItemCommand
+        private ViewModelCommand _AddItemCommand;
+
+        public ViewModelCommand AddItemCommand
+        {
+            get
+            {
+                if (_AddItemCommand == null)
+                {
+                    _AddItemCommand = new ViewModelCommand(AddItem);
+                }
+                return _AddItemCommand;
+            }
+        }
+
+        public void AddItem()
+        {
+            if (this.CurrentProject != null)
+            {
+                this.NewModWindowViewModel.Show();
+            }
+            else
+            {
+                var taskDialog = new TaskDialog();
+                taskDialog.Caption = "エラー";
+                taskDialog.InstructionText = "プロジェクトが開かれていません。";
+                taskDialog.Text = "プロジェクトが開かれていないため、新規アイテムを追加することができませんでした。\nプロジェクトを開いてから実行してください。";
+                taskDialog.Icon = TaskDialogStandardIcon.Error;
+                taskDialog.StandardButtons = TaskDialogStandardButtons.Ok;
+                taskDialog.StartupLocation = TaskDialogStartupLocation.CenterOwner;
+                taskDialog.OwnerWindowHandle = this.WindowHandle;
+                taskDialog.Cancelable = false;
+                taskDialog.Opened += (_, __) =>
+                {
+                    var sender = (TaskDialog)_;
+                    sender.Icon = sender.Icon;
+                };
+                taskDialog.Show();
+            }
+        }
+        #endregion
+
+
         #region Title変更通知プロパティ
         private string _Title;
 
@@ -319,6 +375,24 @@ namespace McMDK.ViewModels
                 if (_InformationWindowViewModel == value)
                     return;
                 _InformationWindowViewModel = value;
+                RaisePropertyChanged();
+            }
+        }
+        #endregion
+
+
+        #region NewModWindowViewModel変更通知プロパティ
+        private NewModWindowViewModel _NewModWindowViewModel;
+
+        public NewModWindowViewModel NewModWindowViewModel
+        {
+            get
+            { return _NewModWindowViewModel; }
+            set
+            { 
+                if (_NewModWindowViewModel == value)
+                    return;
+                _NewModWindowViewModel = value;
                 RaisePropertyChanged();
             }
         }

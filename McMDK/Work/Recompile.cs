@@ -14,6 +14,9 @@ namespace McMDK.Work
 {
     public delegate void RecompileFinishedEventHandler(object sender);
 
+    /// <summary>
+    /// Recompile Mod Sources.
+    /// </summary>
     public class Recompile : WorkBase
     {
         private readonly Project Project;

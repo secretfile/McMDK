@@ -11,8 +11,9 @@ using McMDK.ViewModels;
 
 namespace McMDK.Work
 {
-    public delegate void SetupFinishedEventHandler(object sender);
-
+    /// <summary>
+    /// Setup Minecraft Forge
+    /// </summary>
     public class Setup : WorkBase
     {
         public readonly Project Project;

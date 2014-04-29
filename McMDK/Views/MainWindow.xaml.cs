@@ -34,6 +34,7 @@ namespace McMDK.Views
         {
             InitializeComponent();
             ((MainWindowViewModel)this.DataContext).WindowHandle = new WindowInteropHelper(this).Handle;
+            this.Loaded += (sender, e) => ((McMDK.ViewModels.MainWindowViewModel)this.DataContext).View = this;
         }
     }
 }

@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace McMDK.Work
 {
-    class Debug
+    /// <summary>
+    /// Compiling Java Classes and Launch Minecraft with Debug Console.
+    /// </summary>
+    public class Debug
     {
     }
 }

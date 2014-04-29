@@ -38,21 +38,23 @@
                 <TextBlock Text="識別用文字列" FontSize="15" Margin="25,90,0,0" ToolTip="識別用文字列にはユニークな値(他とは被らない値)を指定してください"/>
                 <TextBox Height="24" Width="250" FontSize="14" 
                          Margin="160,89,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
-                         Text="{Binding ProjectName, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+                         Text="{Binding ItemName, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
                 <TextBlock Text="カテゴリー" FontSize="15" Margin="25,120,0,0" />
                 <ComboBox Height="24" Width="250" FontSize="14"
                           Margin="160,119,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
-                          SelectedItem="{Binding MinecraftVersion, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
-                          ItemsSource="{Binding MinecraftVersionList, Mode=OneWay}"/>
+                          SelectedItem="{Binding Category, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                          ItemsSource="{Binding Categories, Mode=OneWay}"/>
                 <CheckBox Height="24" Width="250" FontSize="14"
                           Content="既存のものをコピーする"
                           Margin="25,149,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
-                          IsChecked="{Binding IsGenModInfo}"
+                          IsChecked="{Binding IsExistCopy}"
                           />
                 <TextBlock Text="コピー元のアイテム" FontSize="15" Margin="25,180,0,0" />
                 <ComboBox Height="24" Width="250" FontSize="14"
                           Margin="160,179,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
-                          SelectedItem="{Binding}" />
+                          SelectedItem="{Binding CopyFrom}"
+                          ItemsSource="{Binding ProjectItems, Mode=OneWay}"
+                          IsEnabled="{Binding IsExistCopy}"/>
                 
                 <Button Content="作成する"
                         Height="25" Width="80" FontSize="13"
