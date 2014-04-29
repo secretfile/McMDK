@@ -25,7 +25,7 @@ namespace McMDK.Views
     /// <summary>
     /// NewModWindow.xaml の相互作用ロジック
     /// </summary>
-    public partial class NewModWindow : Window
+    public partial class NewModWindow : UserControl
     {
         public NewModWindow()
         {

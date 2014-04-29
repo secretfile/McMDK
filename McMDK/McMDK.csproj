@@ -85,6 +85,7 @@
     <Compile Include="Data\ProjectLoader.cs" />
     <Compile Include="Data\TextureLoader.cs" />
     <Compile Include="ViewModels\InformationWindowViewModel.cs" />
+    <Compile Include="ViewModels\NewModWindowViewModel.cs" />
     <Compile Include="ViewModels\NewProjectWindowViewModel.cs" />
     <Compile Include="ViewModels\OpenProjectWindowViewModel.cs" />
     <Compile Include="ViewModels\ProgressWindowViewModel.cs" />

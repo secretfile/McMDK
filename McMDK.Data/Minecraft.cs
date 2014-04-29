@@ -18,7 +18,6 @@ namespace McMDK.Data
         public static readonly string NewVersionUrl = Domain + "version.xml";
         public static readonly string ForgeVersionUrl = Domain + "forge/{0}.xml";
         public static readonly string MinecraftVersionUrl = Domain + "minecraft.xml";
-        public static readonly string PatchUrl = Domain + "patch/{0}.zip";
 
         public async static void Load()
         {

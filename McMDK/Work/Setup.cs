@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using System.IO.Compression;
 using System.Net;
 using McMDK.Data;
@@ -25,7 +26,7 @@ namespace McMDK.Work
             this.downloads = new List<string>();
             this.files = new List<string>();
 
-            this.workingDirectory = Define.ProjectDirectory + "\\" + this.Project.Name + "\\";
+            this.workingDirectory = Define.ProjectDirectory + "\\" + this.Project.Name;
         }
 
 
@@ -43,7 +44,7 @@ namespace McMDK.Work
                 };
                 this.files = new List<string>
                 {
-                    workingDirectory + "minecraftforge.zip"
+                    workingDirectory + "\\minecraftforge.zip"
                 };
             }
             else
@@ -52,13 +53,13 @@ namespace McMDK.Work
                 {
                     String.Format(Define.CoderPackUrl, this.Project.McpVersion),
                     String.Format(Define.ForgeBinaryUrl, this.Project.McVersion, this.Project.ForgeVersion),
-                    String.Format(Define.PatchUrl, this.Project.McVersion)
+                    String.Format(Define.PatchUrl, "forge_" + this.Project.ForgeVersion.Split('.')[3])
                 };
                 this.files = new List<string>
                 {
-                    workingDirectory + "mcp.zip",
-                    workingDirectory + "minecraftforge.zip",
-                    workingDirectory + "patch.zip"
+                    workingDirectory + "\\mcp.zip",
+                    workingDirectory + "\\minecraftforge.zip",
+                    workingDirectory + "\\patch.zip"
                 };
 
                 if (int.Parse(this.Project.McVersion.Replace(".", "")) < 150)
@@ -73,20 +74,20 @@ namespace McMDK.Work
                     this.downloads.Add(Define.McResourcesUrl + "linux_natives.jar");
                     this.downloads.Add(Define.LibrariesUrl + "fernflower.jar");
 
-                    this.files.Add(workingDirectory + "jars\\bin\\minecraft.jar");
-                    this.files.Add(workingDirectory + "jars\\minecraft_server.jar");
-                    this.files.Add(workingDirectory + "jars\\bin\\lwjgl.jar");
-                    this.files.Add(workingDirectory + "jars\\bin\\lwjgl_utils.jar");
-                    this.files.Add(workingDirectory + "jars\\bin\\jinput.jar");
-                    this.files.Add(workingDirectory + "jars\\bin\\natives\\windows_natives.zip");
-                    this.files.Add(workingDirectory + "jars\\bin\\natives\\macosx_natives.zip");
-                    this.files.Add(workingDirectory + "jars\\bin\\natives\\linux_natives.zip");
-                    this.files.Add(workingDirectory + "runtime\\bin\\fernflower.jar");
+                    this.files.Add(workingDirectory + "\\jars\\bin\\minecraft.jar");
+                    this.files.Add(workingDirectory + "\\jars\\minecraft_server.jar");
+                    this.files.Add(workingDirectory + "\\jars\\bin\\lwjgl.jar");
+                    this.files.Add(workingDirectory + "\\jars\\bin\\lwjgl_utils.jar");
+                    this.files.Add(workingDirectory + "\\jars\\bin\\jinput.jar");
+                    this.files.Add(workingDirectory + "\\jars\\bin\\natives\\windows_natives.zip");
+                    this.files.Add(workingDirectory + "\\jars\\bin\\natives\\macosx_natives.zip");
+                    this.files.Add(workingDirectory + "\\jars\\bin\\natives\\linux_natives.zip");
+                    this.files.Add(workingDirectory + "\\runtime\\bin\\fernflower.jar");
                 }
             }
 
             //Create Project Dir
-            FileController.CreateDirectory(Define.ProjectDirectory + "\\" + this.Project.Name);
+            FileController.CreateDirectory(workingDirectory);
 
             this.Logging(this.downloads.Count + " files download.");
             this.Download();
@@ -104,7 +105,7 @@ namespace McMDK.Work
             this.Extract();
         }
 
-        private void Extract()
+        private async void Extract()
         {
             foreach (var file in this.files)
             {
@@ -112,12 +113,8 @@ namespace McMDK.Work
                 {
                     try
                     {
-                        if (FileController.Exists(workingDirectory))
-                        {
-                            FileController.Delete(workingDirectory);
-                            FileController.CreateDirectory(workingDirectory);
-                        }
-                        ZipFile.ExtractToDirectory(file, workingDirectory);
+                        this.Logging("Extracting file - " + file);
+                        await Task.Run(() => ZipFile.ExtractToDirectory(file, workingDirectory + "\\"));
                     }
                     catch (Exception e)
                     {
@@ -135,6 +132,7 @@ namespace McMDK.Work
             {
                 this.ProgressWindowViewModel.IsImmediate = true;
             }
+            Patcher.ApplyPatch(workingDirectory + "\\forge_" + this.Project.ForgeVersion.Split('.')[3], workingDirectory);
             Patcher.ApplyPatch(workingDirectory + "\\patches_before", workingDirectory);
 
             var process = new Process();
@@ -148,8 +146,8 @@ namespace McMDK.Work
             else
             {
                 process.StartInfo.FileName = workingDirectory + "\\runtime\\bin\\python\\python_mcp.exe";
-                process.StartInfo.Arguments = "\"" + workingDirectory + "\\forge\\install.py\" --mcp-dir \"" + workingDirectory + "\"";
-                process.StartInfo.WorkingDirectory = workingDirectory + "\\forge\\";
+                process.StartInfo.Arguments = "\"" + workingDirectory + "\\forge\\install.py\" --mcp-dir ../";
+                process.StartInfo.WorkingDirectory = workingDirectory + "\\forge";
             }
             process.StartInfo.CreateNoWindow = true;
             process.StartInfo.UseShellExecute = false;

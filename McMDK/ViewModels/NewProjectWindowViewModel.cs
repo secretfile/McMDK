@@ -115,6 +115,7 @@ namespace McMDK.ViewModels
                 s.Dispose();
 
                 this.MainWindowViewModel.CurrentProject = project;
+                this.MainWindowViewModel.Title = project.Name + " - McMDK " + Define.GetVersion();
             }
             this.IsShow = false;
             this.ProgressWindowViewModel.IsShow = false;

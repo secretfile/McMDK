@@ -21,14 +21,7 @@ namespace McMDK.Utils
                 string line, diff = "";
                 while ((line = sr.ReadLine()) != null)
                 {
-                    if (line.StartsWith("+++"))
-                    {
-                        diff += line.Replace("+++ work/", "+++ ") + Environment.NewLine;
-                    }
-                    else
-                    {
-                        diff += line + Environment.NewLine;
-                    }
+                    diff += line + Environment.NewLine;
                 }
                 sr.Close();
                 sr.Dispose();
@@ -38,12 +31,14 @@ namespace McMDK.Utils
                 sw.Close();
                 sw.Dispose();
 
-                string args = "-p1 -u -i \"{0}\" -d \"{1}\"";
-                Define.GetLogger().Info("Apply patch to " + file);
+                string args = "-p1 -u -i \"{0}\"";
+                Define.GetLogger().Info("Apply patch from " + file);
+                Define.GetLogger().Debug("Arguments - " + String.Format(args, works + "\\temp.patch"));
 
                 var process = new Process();
                 process.StartInfo.FileName = works + "\\runtime\\bin\\applydiff.exe";
-                process.StartInfo.Arguments = String.Format(args, works + "\\temp.patch", works);
+                process.StartInfo.Arguments = String.Format(args, works + "\\temp.patch");
+                process.StartInfo.WorkingDirectory = works;
                 process.StartInfo.CreateNoWindow = true;
                 process.StartInfo.UseShellExecute = false;
                 process.StartInfo.RedirectStandardError = true;
