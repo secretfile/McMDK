@@ -80,6 +80,8 @@ namespace McMDK.Plugin.UI.Controls
             this.MainGrid.Children.Add(button);
         }
 
+        #region private methods
+
         private void Button_Add(object sender, RoutedEventArgs e)
         {
             //Name が設定されているコントロールの値のみ取得
@@ -378,6 +380,8 @@ namespace McMDK.Plugin.UI.Controls
             if (Math.Abs(control.Width) > 0.0D) uielement.Width = control.Width;
             if (control.Margin != null) uielement.Margin = (Thickness)control.Margin;
         }
-// ReSharper restore PossibleInvalidOperationException
+        // ReSharper restore PossibleInvalidOperationException
+
+        #endregion
     }
 }

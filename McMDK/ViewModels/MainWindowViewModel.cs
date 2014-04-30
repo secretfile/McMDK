@@ -31,7 +31,7 @@ namespace McMDK.ViewModels
 
         //TODO: 分離
         public MainWindow View { set; get; }
-        private ModdingControl ModinggControl;
+        public ModdingControl ModinggControl;
 
         public MainWindowViewModel()
         {

@@ -26,8 +26,8 @@ namespace McMDK.Data
                     Define.GetLogger().Fine("Loading Project from " + project);
                     if (!FileController.Exists(project + "//project//settings.json"))
                     {
-                        Define.GetLogger().Fine("Skip loading project of " + project);
-                        Define.GetLogger().Fine("\"settings.json\" is not exist!");
+                        Define.GetLogger().Info("Skip loading project of " + project);
+                        Define.GetLogger().Info("\"settings.json\" is not exist!");
                         continue;
                     }
                     string json = FileController.LoadFile(project + "//project//settings.json");
@@ -48,14 +48,17 @@ namespace McMDK.Data
                         {
                             continue;
                         }
-                        //
+                        if (!file.EndsWith(".json"))
+                        {
+                            continue;
+                        }
                     }
 
                     Projects.Add(p);
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
+                    Define.GetLogger().Error("Error occurred in Project Loading.", e);
                 }
             }
         }

@@ -36,8 +36,8 @@ namespace McMDK.ViewModels
         {
             this.ItemName = null;
             this.ItemName = "";
+            this.Category = new DummyPlugin();
             this.Category = null;
-            this.Category = "";
             this.CopyFrom = null;
             this.CopyFrom = "";
             this.IsExistCopy = false;
@@ -51,6 +51,53 @@ namespace McMDK.ViewModels
         {
             this.IsShow = false;
         }
+
+
+        #region AddCommand
+        private ViewModelCommand _AddCommand;
+
+        public ViewModelCommand AddCommand
+        {
+            get
+            {
+                if (_AddCommand == null)
+                {
+                    _AddCommand = new ViewModelCommand(Add);
+                }
+                return _AddCommand;
+            }
+        }
+
+        public void Add()
+        {
+            IPlugin plugin = this.Category;
+            this.MainWindowViewModel.ModinggControl.GenerateAndRenderUIs(plugin);
+            this.Dismiss();
+            this.MainWindowViewModel.ModinggControl.Show();
+        }
+        #endregion
+
+
+        #region CancelCommand
+        private ViewModelCommand _CancelCommand;
+
+        public ViewModelCommand CancelCommand
+        {
+            get
+            {
+                if (_CancelCommand == null)
+                {
+                    _CancelCommand = new ViewModelCommand(Cancel);
+                }
+                return _CancelCommand;
+            }
+        }
+
+        public void Cancel()
+        {
+            this.Dismiss();
+        }
+        #endregion
 
 
         #region IsShow変更通知プロパティ
@@ -102,9 +149,9 @@ namespace McMDK.ViewModels
 
 
         #region Categories変更通知プロパティ
-        private List<Plugin.IPlugin> _Categories;
+        private List<IPlugin> _Categories;
 
-        public List<Plugin.IPlugin> Categories
+        public List<IPlugin> Categories
         {
             get
             { return _Categories; }
@@ -120,9 +167,9 @@ namespace McMDK.ViewModels
 
 
         #region Category変更通知プロパティ
-        private string _Category;
+        private IPlugin _Category;
 
-        public string Category
+        public IPlugin Category
         {
             get
             { return _Category; }
@@ -131,7 +178,7 @@ namespace McMDK.ViewModels
                 if (_Category == value)
                     return;
                 _Category = value;
-                if(String.IsNullOrEmpty(_Category))
+                if(_Category == null)
                 {
                     _errors["Category"] = "アイテムのカテゴリーが選択されていません。";
                 }

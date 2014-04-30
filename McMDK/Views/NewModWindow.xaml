@@ -47,19 +47,19 @@
                 <CheckBox Height="24" Width="250" FontSize="14"
                           Content="既存のものをコピーする"
                           Margin="25,149,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
-                          IsChecked="{Binding IsExistCopy}"
+                          IsChecked="{Binding IsExistCopy, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                           />
                 <TextBlock Text="コピー元のアイテム" FontSize="15" Margin="25,180,0,0" />
                 <ComboBox Height="24" Width="250" FontSize="14"
                           Margin="160,179,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
                           SelectedItem="{Binding CopyFrom}"
                           ItemsSource="{Binding ProjectItems, Mode=OneWay}"
-                          IsEnabled="{Binding IsExistCopy}"/>
+                          IsEnabled="{Binding IsExistCopy, Mode=OneWay}"/>
                 
                 <Button Content="作成する"
                         Height="25" Width="80" FontSize="13"
                         Margin="0,0,10,10" HorizontalAlignment="Right" VerticalAlignment="Bottom"
-                        Command="{Binding MakeCommand}"/>
+                        Command="{Binding AddCommand}"/>
 
                 <Button Content="キャンセル"
                         Height="25" Width="80" FontSize="13"
