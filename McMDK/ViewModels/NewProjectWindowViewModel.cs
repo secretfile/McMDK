@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Text;
+using System.Linq;
 using Livet;
 using Livet.Commands;
 using McMDK.Data;
@@ -58,10 +59,19 @@ namespace McMDK.ViewModels
             {
                 if (_MakeCommand == null)
                 {
-                    _MakeCommand = new ViewModelCommand(Make);
+                    _MakeCommand = new ViewModelCommand(Make, CanMake);
                 }
                 return _MakeCommand;
             }
+        }
+
+        public bool CanMake()
+        {
+            if(this._errors.Where(item => item.Value != null).ToArray().Length == 0)
+            {
+                return true;
+            }
+            return false;
         }
 
         public void Make()
@@ -122,7 +132,6 @@ namespace McMDK.ViewModels
         }
 
         #endregion
-
 
 
         #region CancelCommand
@@ -227,6 +236,7 @@ namespace McMDK.ViewModels
                     _errors["ProjectName"] = null;
                 }
                 RaisePropertyChanged();
+                this.MakeCommand.RaiseCanExecuteChanged();
             }
         }
         #endregion
@@ -266,6 +276,7 @@ namespace McMDK.ViewModels
                 }
 
                 RaisePropertyChanged();
+                this.MakeCommand.RaiseCanExecuteChanged();
             }
         }
         #endregion
@@ -294,6 +305,7 @@ namespace McMDK.ViewModels
                 }
 
                 RaisePropertyChanged();
+                this.MakeCommand.RaiseCanExecuteChanged();
             }
         }
         #endregion

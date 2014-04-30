@@ -52,7 +52,7 @@
                 <TextBlock Text="コピー元のアイテム" FontSize="15" Margin="25,180,0,0" />
                 <ComboBox Height="24" Width="250" FontSize="14"
                           Margin="160,179,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
-                          SelectedItem="{Binding CopyFrom}"
+                          SelectedItem="{Binding CopyFrom, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
                           ItemsSource="{Binding ProjectItems, Mode=OneWay}"
                           IsEnabled="{Binding IsExistCopy, Mode=OneWay}"/>
                 

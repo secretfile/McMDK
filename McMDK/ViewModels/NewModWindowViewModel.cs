@@ -62,10 +62,19 @@ namespace McMDK.ViewModels
             {
                 if (_AddCommand == null)
                 {
-                    _AddCommand = new ViewModelCommand(Add);
+                    _AddCommand = new ViewModelCommand(Add, CanAdd);
                 }
                 return _AddCommand;
             }
+        }
+
+        public bool CanAdd()
+        {
+            if(this._errors.Values.Where(item => item != null).ToArray().Length == 0)
+            {
+                return true;
+            }
+            return false;
         }
 
         public void Add()
@@ -143,6 +152,7 @@ namespace McMDK.ViewModels
                     _errors["ItemName"] = null;
                 }
                 RaisePropertyChanged();
+                this.AddCommand.RaiseCanExecuteChanged();
             }
         }
         #endregion
@@ -187,6 +197,7 @@ namespace McMDK.ViewModels
                     _errors["Category"] = null;
                 }
                 RaisePropertyChanged();
+                this.AddCommand.RaiseCanExecuteChanged();
             }
         }
         #endregion
@@ -213,6 +224,8 @@ namespace McMDK.ViewModels
                     _errors["CopyFrom"] = null;
                 }
                 RaisePropertyChanged();
+                this.RaisePropertyChanged("CopyFrom");
+                this.AddCommand.RaiseCanExecuteChanged();
             }
         }
         #endregion
