@@ -37,6 +37,7 @@ namespace McMDK.ViewModels
         {
             this.Title = "Minecraft Mod Development Kit " + Define.GetVersion();
 
+            this.AboutWindowViewModel = new AboutWindowViewModel();
             this.ProgressWindowViewModel = new ProgressWindowViewModel();
             this.NewProjectWindowViewModel = new NewProjectWindowViewModel(this, this.ProgressWindowViewModel);
             this.OpenProjectWindowViewModel = new OpenProjectWindowViewModel(this);
@@ -62,6 +63,28 @@ namespace McMDK.ViewModels
             Define.GetLogger().Info("Check finished.");
             this.ProgressWindowViewModel.IsShow = false;
         }
+
+
+        #region OpenAboutCommand
+        private ViewModelCommand _OpenAboutCommand;
+
+        public ViewModelCommand OpenAboutCommand
+        {
+            get
+            {
+                if (_OpenAboutCommand == null)
+                {
+                    _OpenAboutCommand = new ViewModelCommand(OpenAbout);
+                }
+                return _OpenAboutCommand;
+            }
+        }
+
+        public void OpenAbout()
+        {
+            this.AboutWindowViewModel.Show();
+        }
+        #endregion
 
 
         #region NewProjectCommand
@@ -303,6 +326,24 @@ namespace McMDK.ViewModels
                 if (_Title == value)
                     return;
                 _Title = value;
+                RaisePropertyChanged();
+            }
+        }
+        #endregion
+
+
+        #region AboutWindowViewModel変更通知プロパティ
+        private AboutWindowViewModel _AboutWindowViewModel;
+
+        public AboutWindowViewModel AboutWindowViewModel
+        {
+            get
+            { return _AboutWindowViewModel; }
+            set
+            { 
+                if (_AboutWindowViewModel == value)
+                    return;
+                _AboutWindowViewModel = value;
                 RaisePropertyChanged();
             }
         }

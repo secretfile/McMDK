@@ -81,14 +81,22 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Assets\DataPlugin.cs" />
+    <Compile Include="Assets\PInterfacePlugin.cs" />
+    <Compile Include="Assets\UtilsPlugin.cs" />
     <Compile Include="Converter\BooleanToReverseBooleanConverter.cs" />
+    <Compile Include="Assets\CorePlugin.cs" />
     <Compile Include="Data\ProjectLoader.cs" />
     <Compile Include="Data\TextureLoader.cs" />
+    <Compile Include="ViewModels\AboutWindowViewModel.cs" />
     <Compile Include="ViewModels\InformationWindowViewModel.cs" />
     <Compile Include="ViewModels\NewModWindowViewModel.cs" />
     <Compile Include="ViewModels\NewProjectWindowViewModel.cs" />
     <Compile Include="ViewModels\OpenProjectWindowViewModel.cs" />
     <Compile Include="ViewModels\ProgressWindowViewModel.cs" />
+    <Compile Include="Views\AboutWindow.xaml.cs">
+      <DependentUpon>AboutWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\InformationWindow.xaml.cs">
       <DependentUpon>InformationWindow.xaml</DependentUpon>
     </Compile>
@@ -110,6 +118,10 @@
     <Compile Include="Work\Recompile.cs" />
     <Compile Include="Work\Setup.cs" />
     <Compile Include="Work\WorkBase.cs" />
+    <Page Include="Views\AboutWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\InformationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -177,6 +189,7 @@
     <Content Include="InfrastructureAssemblies\Livet.XML" />
     <Content Include="InfrastructureAssemblies\Microsoft.Expression.Interactions.dll" />
     <Content Include="InfrastructureAssemblies\System.Windows.Interactivity.dll" />
+    <Resource Include="Resources\favicon.png" />
     <Resource Include="Resources\copy_32xLG.png" />
     <Resource Include="Resources\AddNewItem_6273.png" />
     <Resource Include="Resources\application_32xLG.png" />
@@ -201,9 +214,7 @@
     <Resource Include="Resources\StatusAnnotations_Play_32xLG_color.png" />
     <Resource Include="Resources\StatusAnnotations_Stop_32xLG_color.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Assets\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\McMDK.Data\McMDK.Data.csproj">
       <Project>{a1b7d999-63e4-45f5-afcf-1c0402f1006e}</Project>

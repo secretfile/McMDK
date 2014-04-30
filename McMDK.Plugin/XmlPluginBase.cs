@@ -17,6 +17,10 @@ namespace McMDK.Plugin
 
         public string Dependents { set; get; }
 
+        public string IconPath { set; get; }
+
+        public string Description { set; get; }
+
         public Logger Logger { set; get; }
 
         public List<UIControl> Controls { set; get; }

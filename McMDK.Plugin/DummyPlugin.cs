@@ -31,6 +31,16 @@ namespace McMDK.Plugin
             get { return ""; }
         }
 
+        public string IconPath
+        {
+            get { return ""; }
+        }
+
+        public string Description
+        {
+            get { return ""; }
+        }
+
         private Logger _Logger;
         public Logger Logger
         {

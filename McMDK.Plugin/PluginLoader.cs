@@ -47,7 +47,9 @@ namespace McMDK.Plugin
                             Id = b.Element("PluginID").Value,
                             Author = b.Element("Author").Value,
                             Version = b.Element("Version").Value,
-                            Dependents = b.Element("Dependents").Value
+                            Dependents = b.Element("Dependents").Value,
+                            IconPath = b.Element("IconPath").Value,
+                            Description = b.Element("Description").Value
                         };
                 XmlPluginBase p = null;
 

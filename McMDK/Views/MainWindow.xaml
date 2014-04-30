@@ -9,8 +9,8 @@
         xmlns:data="clr-namespace:McMDK.Data;assembly=McMDK.Data"
         xmlns:plugin="clr-namespace:McMDK.Plugin.UI.Controls;assembly=McMDK.Plugin"
         Title="{Binding Title}"
-        MinHeight="500" MinWidth="755"
-        Height="500" Width="755"
+        MinHeight="540" MinWidth="805"
+        Height="540" Width="805"
         >
     <Window.Resources>
         <DataTemplate x:Key="Item" DataType="{x:Type data:Mod}">
@@ -48,7 +48,8 @@
                     <RibbonApplicationMenuItem Header="設定"
                                                ImageSource="../Resources/gear_32xLG.png"/>
                     <RibbonApplicationMenuItem Header="McMDKについて"
-                                               ImageSource="../Resources/StatusAnnotations_Information_32xLG_color.png"/>
+                                               ImageSource="../Resources/StatusAnnotations_Information_32xLG_color.png"
+                                               Command="{Binding OpenAboutCommand}"/>
                     <RibbonApplicationMenuItem Header="終了"
                                                ImageSource="../Resources/StatusAnnotations_Critical_32xLG_color.png"/>
                 </RibbonApplicationMenu>
@@ -121,6 +122,7 @@
                 </Style>
             </ListBox.ItemContainerStyle>
         </ListBox>
+        <v:AboutWindow DataContext="{Binding AboutWindowViewModel}" />
         <v:NewProjectWindow DataContext="{Binding NewProjectWindowViewModel}"/>
         <v:OpenProjectWindow DataContext="{Binding OpenProjectWindowViewModel}"/>
         <v:InformationWindow DataContext="{Binding InformationWindowViewModel}"/>
