@@ -36,5 +36,13 @@ namespace McMDK.Views
             ((MainWindowViewModel)this.DataContext).WindowHandle = new WindowInteropHelper(this).Handle;
             this.Loaded += (sender, e) => ((McMDK.ViewModels.MainWindowViewModel)this.DataContext).View = this;
         }
+
+        public McMDK.Plugin.UI.Controls.ModdingControl ModdingControl
+        {
+            get
+            {
+                return this.ModdingView;
+            }
+        }
     }
 }

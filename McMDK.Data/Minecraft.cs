@@ -21,35 +21,42 @@ namespace McMDK.Data
 
         public async static void Load()
         {
-            var client = new WebClient();
-            var vs = await client.DownloadStringTaskAsync(MinecraftVersionUrl);
-
-            var element = XElement.Parse(vs);
-// ReSharper disable once PossibleNullReferenceException
-            var q = element.Element("Minecraft").Elements("Version").Select(p => new
+            try
             {
-                Version = p.Value,
-                MCPVersion = (string) p.Attribute("mcp")
-            });
-            foreach (var item in q)
-            {
-                MinecraftVersions.Add(item.Version);
-                MCPVersions.Add(item.Version, item.MCPVersion);
+                var client = new WebClient();
+                var vs = await client.DownloadStringTaskAsync(MinecraftVersionUrl);
 
-                //
-                vs = await client.DownloadStringTaskAsync(String.Format(ForgeVersionUrl, item.Version).Replace(" ", "_"));
-                var list = new List<string>();
-                XElement element1 = XElement.Parse(vs);
-// ReSharper disable once PossibleNullReferenceException
-                var s = element1.Element("MinecraftForge").Elements("Version").Select(r => new
+                var element = XElement.Parse(vs);
+                // ReSharper disable once PossibleNullReferenceException
+                var q = element.Element("Minecraft").Elements("Version").Select(p => new
                 {
-                    Version = r.Value
+                    Version = p.Value,
+                    MCPVersion = (string)p.Attribute("mcp")
                 });
-                foreach (var item1 in s)
+                foreach (var item in q)
                 {
-                    list.Add(item1.Version);
+                    MinecraftVersions.Add(item.Version);
+                    MCPVersions.Add(item.Version, item.MCPVersion);
+
+                    //
+                    vs = await client.DownloadStringTaskAsync(String.Format(ForgeVersionUrl, item.Version).Replace(" ", "_"));
+                    var list = new List<string>();
+                    XElement element1 = XElement.Parse(vs);
+                    // ReSharper disable once PossibleNullReferenceException
+                    var s = element1.Element("MinecraftForge").Elements("Version").Select(r => new
+                    {
+                        Version = r.Value
+                    });
+                    foreach (var item1 in s)
+                    {
+                        list.Add(item1.Version);
+                    }
+                    ForgeVersions.Add(item.Version, list);
                 }
-                ForgeVersions.Add(item.Version, list);
+            }
+            catch (WebException)
+            {
+
             }
         }
     }

@@ -31,7 +31,6 @@ namespace McMDK.ViewModels
 
         //TODO: 分離
         public MainWindow View { set; get; }
-        public ModdingControl ModinggControl;
 
         public MainWindowViewModel()
         {
@@ -47,10 +46,6 @@ namespace McMDK.ViewModels
 
         public void Initialize()
         {
-            this.ModinggControl = new ModdingControl();
-            this.ModinggControl.Margin = new System.Windows.Thickness(200, 115, 0, 0);
-            this.View.MainGrid.Children.Add(this.ModinggControl);
-
             Define.GetLogger().Info("Cheking plugins updates...");
 
             this.ProgressWindowViewModel.IsShow = true;

@@ -122,6 +122,7 @@
                 </Style>
             </ListBox.ItemContainerStyle>
         </ListBox>
+        <plugin:ModdingControl x:Name="ModdingView" Margin="200,115,0,0"/>
         <v:AboutWindow DataContext="{Binding AboutWindowViewModel}" />
         <v:NewProjectWindow DataContext="{Binding NewProjectWindowViewModel}"/>
         <v:OpenProjectWindow DataContext="{Binding OpenProjectWindowViewModel}"/>

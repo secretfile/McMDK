@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Net;
 using System.Windows;
 using Livet;
 using McMDK.Data;
@@ -82,6 +83,9 @@ namespace McMDK
 
                 Environment.Exit(0);
             }
+
+            //設定読み込み
+            Settings.Load();
 
             //読み込み
             Minecraft.Load();
