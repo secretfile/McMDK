@@ -80,7 +80,7 @@ namespace McMDK.ViewModels
         public void Add()
         {
             IPlugin plugin = this.Category;
-            this.MainWindowViewModel.View.ModdingControl.GenerateAndRenderUIs(plugin);
+            this.MainWindowViewModel.View.ModdingControl.GenerateAndRenderUIs(plugin, this.ItemName);
             this.Dismiss();
             this.MainWindowViewModel.View.ModdingControl.Show();
         }

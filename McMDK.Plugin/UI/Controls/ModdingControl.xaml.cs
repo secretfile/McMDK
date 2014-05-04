@@ -4,14 +4,36 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 
+using Microsoft.WindowsAPICodePack.Dialogs;
+
 namespace McMDK.Plugin.UI.Controls
 {
+    public delegate void ModdingControlAddedEvent(object sender, AddedEventArgs args);
+
+    public class AddedEventArgs
+    {
+        public bool IsEdited;
+
+        public string UniqueID;
+
+        public IPlugin Plugin;
+
+        public Dictionary<string, string> Properties;
+    }
+
 // ReSharper disable once RedundantExtendsListEntry
     public partial class ModdingControl : UserControl
     {
+        public event ModdingControlAddedEvent OnAddedEvent;
+
+        private IPlugin plugin;
+        private string name;
+        private Dictionary<string, UIElement> required;
+
         public ModdingControl()
         {
             InitializeComponent();
+            this.required = new Dictionary<string, UIElement>();
             this.Dismiss();
         }
 
@@ -30,9 +52,11 @@ namespace McMDK.Plugin.UI.Controls
             this.MainGrid.Children.Clear();
         }
 
-        public void GenerateAndRenderUIs(IPlugin plugin)
+        public void GenerateAndRenderUIs(IPlugin plugin, string name)
         {
             this.Clear();
+            this.plugin = plugin;
+            this.name = name;
             //root
             foreach (UIControl control in plugin.Controls)
             {
@@ -42,6 +66,10 @@ namespace McMDK.Plugin.UI.Controls
 
                 this.RecursiveGenerate(element, control);
 
+                if (control.IsRequired && !String.IsNullOrEmpty(control.Name))
+                {
+                    this.required.Add(control.Name, element);
+                }
                 this.MainGrid.Children.Add(element);
             }
             //Add Buttons
@@ -84,9 +112,58 @@ namespace McMDK.Plugin.UI.Controls
 
         private void Button_Add(object sender, RoutedEventArgs e)
         {
+            bool flag = false;
+
             //Name が設定されているコントロールの値のみ取得
+            foreach(UIElement element in this.required.Values)
+            {
+                if(element is TextBox)
+                {
+                    var textbox = (TextBox)element;
+                    if(String.IsNullOrEmpty(textbox.Text))
+                    {
+                        flag = true;
+                        break;
+                    }
+                }
+                if(element is ComboBox)
+                {
+                    var combobox = (ComboBox)element;
+                    if(combobox.SelectedIndex == -1)
+                    {
+                        flag = true;
+                        break;
+                    }
+                }
+            }
+
+            if(flag)
+            {
+                var taskDialog = new TaskDialog();
+                taskDialog.Caption = "エラー";
+                taskDialog.InstructionText = "条件を満たしていません。";
+                taskDialog.Text = "必須項目が入力されていません。\nプラグインの解説ページなどで確認して、もう一度作業を行ってください。";
+                taskDialog.Icon = TaskDialogStandardIcon.Warning;
+                taskDialog.StandardButtons = TaskDialogStandardButtons.Ok;
+                taskDialog.Cancelable = false;
+                taskDialog.Opened += (_, __) =>
+                {
+                    var sender1 = (TaskDialog)_;
+                    sender1.Icon = sender1.Icon;
+                };
+                taskDialog.Show();
+                return;
+            }
+
             var dic = new Dictionary<string, string>();
             this.RecursiveGet(this.MainGrid.Children, dic);
+
+            AddedEventArgs args = new AddedEventArgs();
+            args.UniqueID = this.name;
+            args.Plugin = this.plugin;
+            args.Properties = dic;
+
+            this.OnAddedEvent(this, args);
         }
 
         //メソッド名思いつかないわ
@@ -175,6 +252,10 @@ namespace McMDK.Plugin.UI.Controls
                 if (parentElement is Panel)
                 {
                     var panel = (Panel)parentElement;
+                    if(control.IsRequired && !String.IsNullOrEmpty(control.Name))
+                    {
+                        this.required.Add(control.Name, element);
+                    }
                     panel.Children.Add(element);
                 }
                 if (parentElement is GroupBox)
@@ -299,7 +380,7 @@ namespace McMDK.Plugin.UI.Controls
                 if (textControl.TextAlignment != null) uielement.TextAlignment = (TextAlignment)textControl.TextAlignment;
                 if (textControl.TextDecoration != null) uielement.TextDecorations.Add(textControl.TextDecoration);
                 if (textControl.TextWrapping != null) uielement.TextWrapping = (TextWrapping)textControl.TextWrapping;
-
+                
                 this.Decorate(uielement, textControl);
 
             }

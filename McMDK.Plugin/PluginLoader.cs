@@ -167,6 +167,7 @@ namespace McMDK.Plugin
                 control.VerticalAlignment = (VerticalAlignment?)StringToObjectConverter.StringToEnum(((XmlElement)node).GetAttribute("VerticalAlignment"), typeof(VerticalAlignment));
                 control.Visibility = (Visibility?)StringToObjectConverter.StringToEnum(((XmlElement)node).GetAttribute("Visibility"), typeof(Visibility));
                 control.Width = StringToObjectConverter.StringTo<double>(((XmlElement)node).GetAttribute("Width"));
+                control.IsRequired = StringToObjectConverter.StringTo<bool>(((XmlElement)node).GetAttribute("IsRequired"), false);
                 parentControl.Children.Add(control);
                 RecursiveSerializeXML(node, control, dir);
             }

@@ -57,6 +57,13 @@ namespace McMDK.ViewModels
             }
             Define.GetLogger().Info("Check finished.");
             this.ProgressWindowViewModel.IsShow = false;
+
+            this.View.ModdingControl.OnAddedEvent += AddedMod;
+        }
+
+        private void AddedMod(object sender, AddedEventArgs obj)
+        {
+            Define.GetLogger().Debug("hoge");
         }
 
 
@@ -321,6 +328,24 @@ namespace McMDK.ViewModels
                 if (_Title == value)
                     return;
                 _Title = value;
+                RaisePropertyChanged();
+            }
+        }
+        #endregion
+
+
+        #region Items変更通知プロパティ
+        private List<Mod> _Items;
+
+        public List<Mod> Items
+        {
+            get
+            { return _Items; }
+            set
+            {
+                if (_Items == value)
+                    return;
+                _Items = value;
                 RaisePropertyChanged();
             }
         }

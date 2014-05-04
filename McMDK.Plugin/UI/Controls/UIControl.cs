@@ -42,6 +42,8 @@ namespace McMDK.Plugin.UI.Controls
 
         public object Tag { set; get; }
 
+        public bool IsRequired { set; get; }
+
         public UIControl()
         {
             this.Children = new List<UIControl>();

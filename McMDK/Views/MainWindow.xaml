@@ -107,7 +107,8 @@
                 
             </RibbonTab>
         </Ribbon>
-        <ListBox Margin="0,115,0,0" Width="200" HorizontalAlignment="Left" ItemTemplate="{StaticResource Item}">
+        <ListBox Margin="0,115,0,0" Width="200" HorizontalAlignment="Left" ItemTemplate="{StaticResource Item}"
+                 ItemsSource="{Binding Items}">
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
                     <Style.Triggers>

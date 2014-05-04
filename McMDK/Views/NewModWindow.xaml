@@ -38,7 +38,8 @@
                 <TextBlock Text="識別用文字列" FontSize="15" Margin="25,90,0,0" ToolTip="識別用文字列にはユニークな値(他とは被らない値)を指定してください"/>
                 <TextBox Height="24" Width="250" FontSize="14" 
                          Margin="160,89,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
-                         Text="{Binding ItemName, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+                         Text="{Binding ItemName, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}">
+                </TextBox>
                 <TextBlock Text="カテゴリー" FontSize="15" Margin="25,120,0,0" />
                 <ComboBox Height="24" Width="250" FontSize="14"
                           Margin="160,119,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
